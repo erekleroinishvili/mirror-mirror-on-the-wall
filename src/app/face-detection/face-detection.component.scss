@@ -26,9 +26,15 @@ canvas {
 }
 
 .landmarks {
+    border: thin solid grey;
+    border-radius: 8px;
+    padding: 8px;
     display: grid;
     grid-template-columns: max-content max-content;
+    place-content: center;
     column-gap: 8px;
+    min-width: 352px;
+    min-height: 160px;
 }
 
 a.done {
@@ -37,4 +43,10 @@ a.done {
     top: 8px;
     background: rgb(255, 255, 255, .7);
     z-index: 1;
+}
+
+.actions {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 16px;
 }

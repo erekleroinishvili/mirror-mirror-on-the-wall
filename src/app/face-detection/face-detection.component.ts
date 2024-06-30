@@ -1,26 +1,30 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, OnInit, ViewChild, ElementRef, inject } from '@angular/core';
-import { EMPTY, Subject, map, pairwise, throttle, timer } from 'rxjs';
+import { EMPTY, ReplaySubject, Subject, map, pairwise, startWith, throttle, timer } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button'
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatIconModule } from '@angular/material/icon'
 import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { MatSelectModule } from '@angular/material/select'
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import * as blazeface from '@tensorflow-models/blazeface';
 import '@tensorflow/tfjs';
 import { ConfirmComponent, ConfirmInput } from '../confirm/confirm.component';
 import { Router, RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-face-detection',
   standalone: true,
   imports: [
     AsyncPipe,
+    FormsModule,
     MatButtonModule,
     MatFormFieldModule,
     MatProgressBarModule,
     MatSelectModule,
+    MatSlideToggleModule,
     RouterLink,
     MatIconModule,
   ],
@@ -44,6 +48,7 @@ export class FaceDetectionComponent implements OnInit {
 
   protected faceDetected = false
   protected showLandmarks = true
+  protected showCoordinates = true
   private model!: blazeface.BlazeFaceModel
   private currentStream!: MediaStream
   protected availableCameras: MediaDeviceInfo[] = [];

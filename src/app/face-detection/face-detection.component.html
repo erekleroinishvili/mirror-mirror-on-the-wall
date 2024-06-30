@@ -13,23 +13,12 @@
 
 <div class="content">
     @if ( ! cameraReady) {
-        Waiting for camera
+        Waiting for camera...
         <mat-progress-bar class="example-margin" mode="indeterminate" />
     } @else if ( ! faceDetected) {
         Detecting faces...
         <mat-progress-bar class="example-margin" mode="indeterminate" />
     } @else {
-        Face detected!
-        <button mat-raised-button (click)="showLandmarks = ! showLandmarks">{{ showLandmarks ? 'Hide' : 'Show' }} landmarks</button>
-
-        <div class="landmarks">
-            @for (landmark of landmarks$ | async; track $index) {
-                <span>{{ landmark[0] }}</span> <span>{{ landmark[1] }}</span>
-            }
-        </div>
-
-        {{ rating.value === undefined }}
-
         <mat-form-field>
             <mat-label>Attractiveness Rating</mat-label>
             <mat-select #rating>
@@ -48,6 +37,23 @@
 
         @if ( rating.value !== undefined ) {
             <button mat-raised-button color="basic" (click)="save(rating.value)">Save</button>
+        }
+
+        <div class="actions">
+            <mat-slide-toggle [(ngModel)]="showLandmarks">Landmarks</mat-slide-toggle>
+            <mat-slide-toggle [(ngModel)]="showCoordinates">Coordinates</mat-slide-toggle>
+        </div>
+
+        @if ( showCoordinates ) {
+            <div class="landmarks">
+                @if (landmarks$ | async; as landmarks) {
+                    @for (landmark of landmarks; track $index) {
+                        <span>{{ landmark[0] }}</span> <span>{{ landmark[1] }}</span>
+                    }
+                } @else {
+                    Waiting for coordinates...
+                }
+            </div>
         }
 
     }
