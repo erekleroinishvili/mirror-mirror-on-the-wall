@@ -1,13 +1,14 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, OnInit, ViewChild, ElementRef, inject } from '@angular/core';
-import { EMPTY, ReplaySubject, Subject, map, pairwise, startWith, throttle, timer } from 'rxjs';
-import { MatButtonModule } from '@angular/material/button'
+import { EMPTY, Subject, map, pairwise, throttle, timer } from 'rxjs';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field'
-import { MatIconModule } from '@angular/material/icon'
-import { MatProgressBarModule } from '@angular/material/progress-bar'
-import { MatSelectModule } from '@angular/material/select'
-import { MatSlideToggleModule } from '@angular/material/slide-toggle'
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatToolbar } from '@angular/material/toolbar'
 import * as blazeface from '@tensorflow-models/blazeface';
 import '@tensorflow/tfjs';
 import { ConfirmComponent, ConfirmInput } from '../confirm/confirm.component';
@@ -25,6 +26,7 @@ import { FormsModule } from '@angular/forms';
     MatProgressBarModule,
     MatSelectModule,
     MatSlideToggleModule,
+    MatToolbar,
     RouterLink,
     MatIconModule,
   ],
@@ -52,7 +54,7 @@ export class FaceDetectionComponent implements OnInit {
   private model!: blazeface.BlazeFaceModel
   private currentStream!: MediaStream
   protected availableCameras: MediaDeviceInfo[] = [];
-  private selectedCameraId!: string;
+  protected selectedCameraId!: string;
   protected cameraReady = false
 
   async ngOnInit(): Promise<void> {
@@ -102,6 +104,12 @@ export class FaceDetectionComponent implements OnInit {
 
     await this.setupCamera()
     this.detectFaces()
+  }
+
+  protected async nextCamera() {
+    const selectedCameraIndex = this.availableCameras.findIndex(camera => camera.deviceId === this.selectedCameraId)
+    const nextCameraIndex = (selectedCameraIndex + 1) % this.availableCameras.length
+    return this.switchCamera(this.availableCameras[nextCameraIndex].deviceId)
   }
 
   private async detectFaces() {
@@ -205,5 +213,7 @@ export class FaceDetectionComponent implements OnInit {
       },
     }).afterClosed()
   }
+
+  console = console
 
 }

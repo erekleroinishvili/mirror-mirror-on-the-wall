@@ -1,10 +1,25 @@
-<a mat-icon-button [routerLink]="['/']" class="done"><mat-icon>close</mat-icon></a>
-
-<select (change)="switchCamera($any($event.target).value)">
-    @for (camera of availableCameras; track camera; let index = $index;) {
-        <option [value]="camera.deviceId">{{ camera.label || 'Camera ' + (index + 1) || 'Camera ' + camera.deviceId }}</option>
+<div class="toolbar">
+    @if (availableCameras.length > 1) {
+        <button mat-icon-button (click)="nextCamera()"><mat-icon>flip_camera_ios</mat-icon></button>
     }
-  </select>
+
+    <mat-form-field>
+        <mat-label><mat-icon>videocam</mat-icon>Camera</mat-label>
+
+        <mat-select (valueChange)="switchCamera($event)" [value]="selectedCameraId">
+            @for (camera of availableCameras; track camera; let index = $index;) {
+                <mat-option [value]="camera.deviceId">{{ camera.label || 'Camera ' + (index + 1) || 'Camera ' + camera.deviceId }}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+
+    <mat-slide-toggle [ngModel]="cameraReady && ! video.paused" (change)="$event.checked ? video.play() : video.pause()">Live</mat-slide-toggle>
+
+    <div class="spacer" style="flex-grow: 1;"></div>
+
+    <a mat-icon-button [routerLink]="['/']" class="done"><mat-icon>close</mat-icon></a>
+
+</div>
 
 <div class="frame">
     <video #video width="320" height="240" autoplay></video>
