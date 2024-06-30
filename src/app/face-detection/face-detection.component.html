@@ -1,0 +1,54 @@
+<a mat-icon-button [routerLink]="['/']" class="done"><mat-icon>close</mat-icon></a>
+
+<select (change)="switchCamera($any($event.target).value)">
+    @for (camera of availableCameras; track camera; let index = $index;) {
+        <option [value]="camera.deviceId">{{ camera.label || 'Camera ' + (index + 1) || 'Camera ' + camera.deviceId }}</option>
+    }
+  </select>
+
+<div class="frame">
+    <video #video width="320" height="240" autoplay></video>
+    <canvas #canvas width="320" height="240"></canvas>
+</div>
+
+<div class="content">
+    @if ( ! cameraReady) {
+        Waiting for camera
+        <mat-progress-bar class="example-margin" mode="indeterminate" />
+    } @else if ( ! faceDetected) {
+        Detecting faces...
+        <mat-progress-bar class="example-margin" mode="indeterminate" />
+    } @else {
+        Face detected!
+        <button mat-raised-button (click)="showLandmarks = ! showLandmarks">{{ showLandmarks ? 'Hide' : 'Show' }} landmarks</button>
+
+        <div class="landmarks">
+            @for (landmark of landmarks$ | async; track $index) {
+                <span>{{ landmark[0] }}</span> <span>{{ landmark[1] }}</span>
+            }
+        </div>
+
+        {{ rating.value === undefined }}
+
+        <mat-form-field>
+            <mat-label>Attractiveness Rating</mat-label>
+            <mat-select #rating>
+                <mat-option value="1">1 - Ugly</mat-option>
+                <mat-option value="2">2 - Unattractive</mat-option>
+                <mat-option value="3">3 - Average</mat-option>
+                <mat-option value="5">7 - Beautiful</mat-option>
+                <mat-option value="6">4 - Charming</mat-option>
+                <mat-option value="7">5 - Striking</mat-option>
+                <mat-option value="7">6 - Exquisite</mat-option>
+                <mat-option value="8">8 - Stunning</mat-option>
+                <mat-option value="9">9 - Breathtaking</mat-option>
+                <mat-option value="10">10 - Gorgeous</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        @if ( rating.value !== undefined ) {
+            <button mat-raised-button color="basic" (click)="save(rating.value)">Save</button>
+        }
+
+    }
+</div>

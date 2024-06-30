@@ -1,0 +1,40 @@
+.frame {
+    border: thin solid black;
+    margin: 16px auto;
+    position: relative;
+    width: 320px;
+    height: 240px;
+}
+
+video,
+canvas {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    // left: 0;
+    // bottom: 0;
+}
+
+.content {
+    margin: 8px;
+    display: grid;
+    grid-auto-flow: row;
+    row-gap: 8px;
+    justify-items: center;
+}
+
+.landmarks {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    column-gap: 8px;
+}
+
+a.done {
+    position: fixed;
+    right: 8px;
+    top: 8px;
+    background: rgb(255, 255, 255, .7);
+    z-index: 1;
+}
