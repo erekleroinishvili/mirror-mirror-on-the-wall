@@ -8,7 +8,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatToolbar } from '@angular/material/toolbar'
 import * as blazeface from '@tensorflow-models/blazeface';
 import '@tensorflow/tfjs';
 import { ConfirmComponent, ConfirmInput } from '../confirm/confirm.component';
@@ -26,7 +25,6 @@ import { FormsModule } from '@angular/forms';
     MatProgressBarModule,
     MatSelectModule,
     MatSlideToggleModule,
-    MatToolbar,
     RouterLink,
     MatIconModule,
   ],

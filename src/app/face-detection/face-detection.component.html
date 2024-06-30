@@ -3,7 +3,7 @@
         <button mat-icon-button (click)="nextCamera()"><mat-icon>flip_camera_ios</mat-icon></button>
     }
 
-    <mat-form-field>
+    <mat-form-field style="margin-bottom:-12px;">
         <mat-label><mat-icon>videocam</mat-icon>Camera</mat-label>
 
         <mat-select (valueChange)="switchCamera($event)" [value]="selectedCameraId">
@@ -34,21 +34,33 @@
         Detecting faces...
         <mat-progress-bar class="example-margin" mode="indeterminate" />
     } @else {
-        <mat-form-field>
-            <mat-label>Attractiveness Rating</mat-label>
-            <mat-select #rating>
-                <mat-option value="1">1 - Ugly</mat-option>
-                <mat-option value="2">2 - Unattractive</mat-option>
-                <mat-option value="3">3 - Average</mat-option>
-                <mat-option value="5">7 - Beautiful</mat-option>
-                <mat-option value="6">4 - Charming</mat-option>
-                <mat-option value="7">5 - Striking</mat-option>
-                <mat-option value="7">6 - Exquisite</mat-option>
-                <mat-option value="8">8 - Stunning</mat-option>
-                <mat-option value="9">9 - Breathtaking</mat-option>
-                <mat-option value="10">10 - Gorgeous</mat-option>
-            </mat-select>
-        </mat-form-field>
+
+        <div class="rate-box">
+            <mat-form-field>
+                <mat-label>Attractiveness Rating</mat-label>
+                <mat-select #rating>
+                    <mat-option value="1">1 - Ugly</mat-option>
+                    <mat-option value="2">2 - Unattractive</mat-option>
+                    <mat-option value="3">3 - Average</mat-option>
+                    <mat-option value="4">4 - Charming</mat-option>
+                    <mat-option value="5">5 - Beautiful</mat-option>
+                    <mat-option value="6">6 - Striking</mat-option>
+                    <mat-option value="7">7 - Exquisite</mat-option>
+                    <mat-option value="8">8 - Stunning</mat-option>
+                    <mat-option value="9">9 - Breathtaking</mat-option>
+                    <mat-option value="10">10 - Gorgeous</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            @switch (rating.value) {
+                @case (undefined) {
+                    <img src="images/rate.png">
+                }
+                @default {
+                    <img [src]="'images/rate-' + rating.value + '.png'">
+                }
+            }
+        </div>
 
         @if ( rating.value !== undefined ) {
             <button mat-raised-button color="basic" (click)="save(rating.value)">Save</button>
