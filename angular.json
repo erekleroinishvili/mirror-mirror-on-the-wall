@@ -37,6 +37,12 @@
                 "input": "public"
               }
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/stylings",
+                "src/stylings/partials"
+              ]
+            },
             "styles": [
               "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.scss"
