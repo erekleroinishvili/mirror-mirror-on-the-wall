@@ -21,9 +21,11 @@
 
 </div>
 
-<div class="frame">
-    <video #video width="320" height="240" autoplay></video>
-    <canvas #canvas width="320" height="240"></canvas>
+<div class="frame-container">
+    <div class="frame">
+        <video #video autoplay></video>
+        <canvas #canvas [width]="videoWidth" [height]="videoHeight" ></canvas>
+    </div>
 </div>
 
 <div class="content">

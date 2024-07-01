@@ -38,6 +38,8 @@ export class FaceDetectionComponent implements OnInit {
   private readonly dialog = inject(MatDialog)
   private readonly router = inject(Router)
   private requestId?: number
+  protected videoWidth?: number
+  protected videoHeight?: number
 
   #landmarks$ = new Subject<[number, number][] | undefined>()
   protected landmarks$ = this.#landmarks$.pipe(
@@ -83,12 +85,14 @@ export class FaceDetectionComponent implements OnInit {
         deviceId: this.selectedCameraId,
         frameRate: { ideal: 5, max: 15 },
         width: 320,
-        height: 240,
+        // height: 240,
       }
     }
     this.currentStream = await navigator.mediaDevices.getUserMedia(constraints)
     this.video.nativeElement.srcObject = this.currentStream
     await this.video.nativeElement.play()
+    this.videoWidth = this.video.nativeElement.videoWidth
+    this.videoHeight = this.video.nativeElement.videoHeight
     this.cameraReady = true
   }
 

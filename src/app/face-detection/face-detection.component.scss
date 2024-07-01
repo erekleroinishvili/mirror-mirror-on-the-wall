@@ -1,20 +1,24 @@
-.frame {
-    border: thin solid black;
-    margin: 16px auto;
-    position: relative;
-    width: 320px;
-    height: 240px;
+.frame-container {
+    margin-block: 16px;
+    display: grid;
+    justify-content: center;
 }
 
-video,
+.frame {
+    display: inline-block;
+    border: thin solid black;
+    position: relative;
+}
+
+video {
+    display: block;
+}
 canvas {
     position: absolute;
     top: 0;
     right: 0;
     width: 100%;
     height: 100%;
-    // left: 0;
-    // bottom: 0;
 }
 
 .content {
